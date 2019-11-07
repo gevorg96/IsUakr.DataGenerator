@@ -1,15 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace IsUakr.DataGenerator
 {
@@ -25,6 +18,16 @@ namespace IsUakr.DataGenerator
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var builder = new PostgreSqlConnectionStringBuilder(
+                "dfqjg178fisif3",
+                "ec2-176-34-184-174.eu-west-1.compute.amazonaws.com",
+                "d21ed0472a9f90c3ed1a987d81fab642d98fb0efe9de3afd6a855f9948030a1b",
+                "bmtvsxirwexwqf",
+                5432, 
+                true, 
+                true, 
+                SslMode.Require);
+            //services.AddTransient(o => new NpgDbContext(builder.ConnectionString));
             services.AddControllers();
         }
 
@@ -39,8 +42,6 @@ namespace IsUakr.DataGenerator
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }
